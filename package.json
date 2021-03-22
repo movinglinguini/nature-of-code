@@ -1,0 +1,12 @@
+{
+  "name": "processing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx browser-sync start --server --files '**/*.((html)|(js)|(css))'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "LAG1996",
+  "license": "ISC"
+}
