@@ -21,13 +21,16 @@ function buildChapter(chapterKey) {
       } catch (err) {
         console.warn(err);
       }
+
+      
+      this.afterDraw();
       
       if (this.__needsUpdate) {
         this.setup();
         this.__needsUpdate = false;
       }
     },
-
+    afterDraw() {},
     __subChapters: {},
   });
 
@@ -39,6 +42,8 @@ function buildChapter(chapterKey) {
       newChapter.setup();
     }).bind(newChapter)
   );
+
+  CHAPTER_FUNCTIONS.set(chapterKey, newChapter);
 
   return newChapter;
 }

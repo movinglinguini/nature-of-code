@@ -3,10 +3,17 @@ const chapterToSub = new Map(
     return [chapter.key, chapter.tabs];
   }),
 );
+const subToChapter = new Map()
+AVAILABLE_CHAPTERS.map(chapter => {
+  Object.keys(chapter.tabs).forEach((tk) => {
+    subToChapter.set(tk, chapter.key);
+  });
+});
+
 const subChapterContainerEl = document.querySelector('.sub-chapter-container select');
 
 function generateSubChapters(activeChapter) {
-  subChapterContainerEl.childNodes.forEach(child => child.empty());
+  document.querySelectorAll('.sub-chapter-container select option').forEach(child => child.remove());
   subChapterContainerEl.setAttribute('value', CHAPTER_MANAGER.activeSubChapter);
 
   const tabs = chapterToSub.get(activeChapter);
@@ -21,9 +28,14 @@ function generateSubChapters(activeChapter) {
     
     subChapterContainerEl.append(newOption);
   });
+  
 }
 
 generateSubChapters(CHAPTER_MANAGER.activeChapter);
 subChapterContainerEl.addEventListener('change', ({ target }) => {
   CHAPTER_MANAGER.onSelectSubChapter(target.value);
+});
+
+CHAPTER_MANAGER.subscribeToChapterChange('sub-chapter-select', (chapterKey) => {
+  generateSubChapters(chapterKey);
 });

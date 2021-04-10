@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx browser-sync start --server --files '**/*.((html)|(js)|(css))'",
+    "start": "npx browser-sync start --server --files **/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "LAG1996",

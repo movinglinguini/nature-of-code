@@ -1,14 +1,13 @@
-const chapters = new Map([
-  ['introduction', Introduction],
-  ['chapter-one', ChapterOne],
-]);
-
-const selectedChapter = chapters.get('introduction');
+// const selectedChapter = chapters.get('introduction');
+// CHAPTER_MANAGER.subscribeToSubChapterChange((chapterKey) => {
+//   selectedChapter = 
+// });
 
 function setup() {
-  selectedChapter.setup();
+  CHAPTER_FUNCTIONS.get(CHAPTER_MANAGER.activeChapter).setup();
 }
 
 function draw() {
-  selectedChapter.draw();
+  CHAPTER_FUNCTIONS.get(CHAPTER_MANAGER.activeChapter).draw();
 }
+

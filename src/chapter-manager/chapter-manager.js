@@ -17,6 +17,8 @@ const CHAPTER_MANAGER = {
     this.__chapterWatchers.forEach(cb => cb(chapterKey));
 
     localStorage.setItem('_nature-of-code-chapter', chapterKey);
+
+    this.onSelectSubChapter(Object.keys(AVAILABLE_CHAPTERS.find(ch => ch.key === chapterKey).tabs)[0]);
   },
   onSelectSubChapter(subChapterKey) {
     this.__activeSubChapter = subChapterKey;
@@ -32,3 +34,5 @@ const CHAPTER_MANAGER = {
     this.__subChapterWatchers.set(key, cb);
   },
 };
+
+const CHAPTER_FUNCTIONS = new Map();

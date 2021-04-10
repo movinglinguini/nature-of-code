@@ -8,6 +8,10 @@ AVAILABLE_CHAPTERS.forEach(chapter => {
   chapterSelectEl.append(newOption);
 });
 
+chapterSelectEl.value = CHAPTER_MANAGER.activeChapter;
 chapterSelectEl.addEventListener('change', ({ target }) => {
-  console.log(target.value);
+  CHAPTER_MANAGER.onSelectChapter(target.value);
+});
+
+CHAPTER_MANAGER.subscribeToChapterChange('chapter-select', (chapterKey) => {
 });
