@@ -1,3 +1,5 @@
+import { buildChapter } from '../shared/build-chapter.js'; 
+
 class Walker {
   constructor(canvasWidth, canvasHeight) {
     this.x = canvasWidth / 2;
@@ -35,7 +37,7 @@ const _introGlobals = {
   canvasBackground: 225,
 };
 
-const Introduction = buildChapter('introduction');
+export const Introduction = buildChapter('introduction');
 
 Introduction.init = () => {
     clear();

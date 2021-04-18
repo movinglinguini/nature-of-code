@@ -1,3 +1,6 @@
+import { CHAPTER_MANAGER } from '../chapter-manager/chapter-manager.js';
+import { AVAILABLE_CHAPTERS } from '../constants/chapters.js';
+
 CHAPTER_MANAGER.subscribeToSubChapterChange('ui-description', () => {
   writeDescription();
 });

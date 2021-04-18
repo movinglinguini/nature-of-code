@@ -1,3 +1,6 @@
+import { CHAPTER_MANAGER } from '../chapter-manager/chapter-manager.js';
+import { AVAILABLE_CHAPTERS } from '../constants/chapters.js';
+
 const chapterToSub = new Map(
   AVAILABLE_CHAPTERS.map(chapter => {
     return [chapter.key, chapter.tabs];

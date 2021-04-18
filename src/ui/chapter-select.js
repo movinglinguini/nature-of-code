@@ -1,3 +1,6 @@
+import { CHAPTER_MANAGER } from '../chapter-manager/chapter-manager.js';
+import { AVAILABLE_CHAPTERS } from '../constants/chapters.js';
+
 const chapterSelectEl = document.querySelector('.chapters-container select');
 
 AVAILABLE_CHAPTERS.forEach(chapter => {

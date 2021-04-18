@@ -1,4 +1,4 @@
-const AVAILABLE_CHAPTERS = [
+export const AVAILABLE_CHAPTERS = [
   // Introduction
   {
     title: 'Introduction',
@@ -46,6 +46,14 @@ const AVAILABLE_CHAPTERS = [
       'bouncing-ball-to-mouse': {
         title: 'Bouncing Ball Accelarates Toward Mouse',
         description: 'In this example, the ball will accelarate toward the mouse.',
+      },
+      'bouncing-ball-with-gravity': {
+        title: 'Bouncing Ball Accelerates Toward the Ground',
+        description: 'In this example, the ball will fall down due to the force of gravity.'
+      },
+      'bouncing-ball-with-gravity-and-friction': {
+        title: 'Bouncing Ball with Gravity and Friction',
+        description: 'In this example, the ball will fall and be affected by friction',
       }
     }
   }

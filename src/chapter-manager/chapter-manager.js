@@ -1,4 +1,4 @@
-const CHAPTER_MANAGER = {
+export const CHAPTER_MANAGER = {
   __activeChapter: localStorage.getItem('_nature-of-code-chapter') || 'introduction',
   __activeSubChapter: localStorage.getItem('_nature-of-code-subchapter') || 'random-walk-1',
 
@@ -35,4 +35,4 @@ const CHAPTER_MANAGER = {
   },
 };
 
-const CHAPTER_FUNCTIONS = new Map();
+export const CHAPTER_FUNCTIONS = new Map();

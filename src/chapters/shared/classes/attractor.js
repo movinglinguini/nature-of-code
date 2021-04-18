@@ -1,0 +1,3 @@
+class Attractor extends PhysicsBody {
+  
+}

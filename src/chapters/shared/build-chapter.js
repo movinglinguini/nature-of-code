@@ -1,4 +1,6 @@
-function buildChapter(chapterKey) {
+import { CHAPTER_MANAGER, CHAPTER_FUNCTIONS } from '../../chapter-manager/chapter-manager.js';
+
+export function buildChapter(chapterKey) {
   const newChapter = ({
     __needsUpdate: false,
     __chapterKey: chapterKey,

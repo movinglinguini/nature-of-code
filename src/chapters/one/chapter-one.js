@@ -1,3 +1,6 @@
+import { buildChapter } from '../shared/build-chapter.js'; 
+import * as UTILS from '../shared/utils.js';
+
 class BouncingBall {
   constructor(canvasWidth, canvasHeight) {
     this.x = canvasWidth / 2;
@@ -30,33 +33,50 @@ class BouncingBall {
       this.speeds.y *= -1;
     }
   }
+
 }
 
 class VectBouncingBall extends BouncingBall {
-  constructor(canvasWidth, canvasHeight) {
+  constructor(canvasWidth, canvasHeight, mass=10, mu=0.01) {
     super(canvasWidth, canvasHeight);
     this.position = createVector(this.x, this.y);
     this.acceleration = createVector(0, 0);
     this.velocity = createVector(this.speeds.x, this.speeds.y);
+    this.mass = mass || 10;
+    this.mu = mu || 0.01;
   }
 
   move() {
     this.velocity.add(this.acceleration);
     this.position.add(this.velocity);
 
-    if (!isInInterval(this.position.x, this.bounds.x[0], this.bounds.x[1])) {
+    if (!UTILS.isInInterval(this.position.x, this.bounds.x[0], this.bounds.x[1])) {
       this.velocity.x *= -1;
     }
 
-    if (!isInInterval(this.position.y, this.bounds.y[0], this.bounds.y[1])) {
+    if (!UTILS.isInInterval(this.position.y, this.bounds.y[0], this.bounds.y[1])) {
       this.velocity.y *= -1;
     }
     
-    this.velocity.x = clamp(this.velocity.x, -this.maxSpeeds.x, this.maxSpeeds.x);
-    this.velocity.y = clamp(this.velocity.y, -this.maxSpeeds.y, this.maxSpeeds.y);
+    this.velocity.x = UTILS.clamp(this.velocity.x, -this.maxSpeeds.x, this.maxSpeeds.x);
+    this.velocity.y = UTILS.clamp(this.velocity.y, -this.maxSpeeds.y, this.maxSpeeds.y);
 
-    this.position.x = clamp(this.position.x, this.bounds.x[0], this.bounds.y[1]);
-    this.position.y = clamp(this.position.y, this.bounds.y[0], this.bounds.y[1]);
+    this.position.x = UTILS.clamp(this.position.x, this.bounds.x[0], this.bounds.y[1]);
+    this.position.y = UTILS.clamp(this.position.y, this.bounds.y[0], this.bounds.y[1]);
+
+    // apply friction
+    const friction_ = this.velocity.copy();
+    friction_.mult(-1);
+    friction_.normalize();
+    friction_.mult(this.mu);
+
+    this.applyForce(friction_);
+  }
+
+  
+  applyForce(force) {
+    const force_ = force.div(this.mass);
+    this.acceleration.add(force_);
   }
 
   accelerate(x, y) {
@@ -70,14 +90,18 @@ const _chOneGlobals = {
   canvasBackground: 225,
 };
 
-const ChapterOne = buildChapter('chapter-1');
+export const ChapterOne = buildChapter('chapter-1');
 ChapterOne.init = () => {
   createCanvas(_chOneGlobals.canvasWidth, _chOneGlobals.canvasHeight);
   background(_chOneGlobals.canvasBackground);
+
+  _chOneGlobals.ball = new VectBouncingBall(_chOneGlobals.canvasWidth, _chOneGlobals.canvasHeight, 10);
 };
 
 ChapterOne.afterDraw = () => {
-  
+  _chOneGlobals.ball.move();
+  background('rgba(225, 225, 225, 0.25)');
+  ChapterOne.__drawBall(_chOneGlobals.ball.position.x, _chOneGlobals.ball.position.y);
 }
 
 ChapterOne.__drawBall = (x, y) => {
@@ -87,7 +111,7 @@ ChapterOne.__drawBall = (x, y) => {
 ChapterOne.__subChapters = {
   'bouncing-ball-no-vectors': {
     setup() {
-      _chOneGlobals.ball = new BouncingBall(_chOneGlobals.canvasWidth, _chOneGlobals.canvasHeight);
+      // _chOneGlobals.ball = new BouncingBall(_chOneGlobals.canvasWidth, _chOneGlobals.canvasHeight);
     },
     draw() {
       _chOneGlobals.ball.move();
@@ -98,7 +122,7 @@ ChapterOne.__subChapters = {
 
   'bouncing-ball-with-vectors': {
     setup() {
-      _chOneGlobals.ball = new VectBouncingBall(_chOneGlobals.canvasWidth, _chOneGlobals.canvasHeight);
+      _chOneGlobals.ball = new VectBouncingBall(_chOneGlobals.canvasWidth, _chOneGlobals.canvasHeight, 10, 0);
     },
     draw() {
       _chOneGlobals.ball.move();
@@ -148,6 +172,24 @@ ChapterOne.__subChapters = {
       _chOneGlobals.ball.move();
       background('rgba(225, 225, 225, 0.25)');
       ChapterOne.__drawBall(_chOneGlobals.ball.position.x, _chOneGlobals.ball.position.y);
-    }
+    },
   },
+
+  
+  'bouncing-ball-with-gravity': {
+    setup() {
+    },
+    draw() {
+      _chOneGlobals.ball.applyForce(createVector(0, 0.1));
+    },
+  },
+
+  'bouncing-ball-with-gravity-and-friction': {
+    setup() {
+      _chOneGlobals.ball = new VectBouncingBall(_chOneGlobals.canvasWidth, _chOneGlobals.canvasHeight, 10, 0.01);
+    },
+    draw() {
+      _chOneGlobals.ball.applyForce(createVector(0, 0.01));
+    }
+  }
 }
