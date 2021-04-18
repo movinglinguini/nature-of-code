@@ -4,9 +4,14 @@ export function buildChapter(chapterKey) {
   const newChapter = ({
     __needsUpdate: false,
     __chapterKey: chapterKey,
+    __delta: 0,
+    __lastTime: new Date().getTime(),
+
     init() {},
     setup() {
       this.init();
+      this.__delta = 0;
+      this.__lastTime = new Date().getTime();
 
       try {
         this.__subChapters[CHAPTER_MANAGER.activeSubChapter].setup();
@@ -16,6 +21,10 @@ export function buildChapter(chapterKey) {
     },
     beforeDraw() {},
     draw() {
+      const newTime = new Date().getTime();
+      this.__delta = Math.abs(newTime - this.__lastTime);
+      this.__lastTime = newTime;
+
       this.beforeDraw();
 
       try {
@@ -24,7 +33,6 @@ export function buildChapter(chapterKey) {
         console.warn(err);
       }
 
-      
       this.afterDraw();
       
       if (this.__needsUpdate) {
@@ -40,7 +48,6 @@ export function buildChapter(chapterKey) {
   
   CHAPTER_MANAGER.subscribeToSubChapterChange(chapterKey, (
     (subChapterKey_) => {
-      console.log(subChapterKey_);
       newChapter.setup();
     }).bind(newChapter)
   );

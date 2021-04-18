@@ -1,33 +1,25 @@
-class PhysicsBody {
+export class PhysicsBody {
 
   constructor(initPosition, mass) {
     
     this.position = initPosition;
-    this.mass = mass || 0;
+    this.mass = mass || 1;
 
-    this.velocity = initPosition || new p5.Vector(0, 0);
+    this.velocity = new p5.Vector(0, 0);
     this.acceleration = new p5.Vector(0, 0);
 
     this._active = true;
   }
 
-  pause() {
-    this._active = false;
-  }
-  start() {
-    this._active = true;
-    this._update();
-  }
-
   applyForce(force) {
-    const force_ = new p5.Vector(force);
-    this.acceleration.add(force_.div(mass));
+    const force_ = force.copy();
+    this.acceleration = this.acceleration.add(force_.div(this.mass));
   }
 
   applyCollinearForce(mag) {
-    const force_ = new p5.Vector(this.velocity);
+    const force_ = this.velocity.copy();
     force_.normalize();
-    force_.apply(mag);
+    force_.mult(mag);
 
     this.applyForce(force_);
   }
@@ -38,19 +30,15 @@ class PhysicsBody {
 
   draw() {}
 
+  update() {
+    this.draw();
+    this._move();
+  }
+
   _move() {
     this.velocity.add(this.acceleration);
     this.position.add(this.velocity);
 
     this.acceleration.mult(0);
-  }
-
-  _update() {
-    this.draw();
-    this._move();
-
-    if (this._active) {
-      requestAnimationFrame(this._update.bind(this));
-    }
   }
 }

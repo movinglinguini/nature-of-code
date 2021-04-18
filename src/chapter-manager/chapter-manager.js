@@ -1,3 +1,5 @@
+import { AVAILABLE_CHAPTERS } from '../constants/chapters.js';
+
 export const CHAPTER_MANAGER = {
   __activeChapter: localStorage.getItem('_nature-of-code-chapter') || 'introduction',
   __activeSubChapter: localStorage.getItem('_nature-of-code-subchapter') || 'random-walk-1',

@@ -56,5 +56,24 @@ export const AVAILABLE_CHAPTERS = [
         description: 'In this example, the ball will fall and be affected by friction',
       }
     }
+  },
+  // Chapter 2
+  {
+    title: 'Chapter 2. Forces',
+    key: 'chapter-2',
+    tabs: {
+      'one-object-with-static-attractor': {
+        title: 'Object with Static Attractor',
+        description: '',
+      },
+      'one-object-with-oscillating-attractor': {
+        title: 'Object with Oscillating Attractor',
+        description: '',
+      },
+      'objects-with-mutual-attraction': {
+        title: 'Objects with Mutual Attraction',
+        description: '',
+      },
+    },
   }
 ]
